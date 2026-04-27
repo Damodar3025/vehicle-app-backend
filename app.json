@@ -1,9 +1,14 @@
 {
   "expo": {
-    "extra": {
-      "eas": {
-        "projectId": "f0cf9881-c654-4c4c-9b88-0305494e3091"
-      }
+    "name": "VehicleApp",
+    "slug": "vehicle-mobile-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "android": {
+      "package": "com.vehicleapp.mobile"
+    },
+    "ios": {
+      "bundleIdentifier": "com.vehicleapp.mobile"
     }
   }
 }
