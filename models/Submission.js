@@ -10,7 +10,7 @@ const submissionSchema = new mongoose.Schema(
     factoryPlace: {
       type: String,
       required: true,
-      enum: ['Mandya', 'Shivamogga', 'Hospet'],
+      enum: ['NSL Sugars Mandya', 'Mylar sugars Hoovina Hadagali', 'Mudhol'],
     },
     smsSent: { type: Boolean, default: false },
   },
