@@ -14,7 +14,7 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const validPlaces = ['Mandya', 'Shivamogga', 'Hospet'];
+    const validPlaces = ['NSL Sugars Mandya', 'Mylar sugars Hoovina Hadagali', 'Mudhol'];
     if (!validPlaces.includes(factoryPlace)) {
       return res.status(400).json({ message: 'Invalid factory place' });
     }
