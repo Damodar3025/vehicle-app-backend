@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load saved session on app start
     const loadSession = async () => {
       try {
         const savedToken = await AsyncStorage.getItem('token');

@@ -1,0 +1,63 @@
+# VEHICLE APP - COMPLETE SETUP SCRIPT
+# Run this file step by step in PowerShell inside the mobile folder
+
+# ============================================
+# STEP 1 - Go to mobile folder
+# ============================================
+# cd E:\vehicle-app\mobile
+
+# ============================================
+# STEP 2 - Clean everything
+# ============================================
+# Remove-Item -Recurse -Force node_modules -ErrorAction SilentlyContinue
+# Remove-Item package-lock.json -ErrorAction SilentlyContinue
+# Remove-Item -Recurse -Force .expo -ErrorAction SilentlyContinue
+
+# ============================================
+# STEP 3 - Install packages
+# ============================================
+# npm install
+
+# ============================================
+# STEP 4 - Install eas-cli
+# ============================================
+# npm install -g eas-cli@latest
+
+# ============================================
+# STEP 5 - Close VS Code and reopen it
+# (This makes eas command available)
+# ============================================
+
+# ============================================
+# STEP 6 - Login to Expo
+# ============================================
+# npx eas-cli login
+
+# ============================================
+# STEP 7 - Get your project ID
+# Go to https://expo.dev -> your project -> copy Project ID
+# Paste it in app.json under extra.eas.projectId
+# ============================================
+
+# ============================================
+# STEP 8 - Configure EAS
+# ============================================
+# npx eas-cli build:configure
+
+# ============================================
+# STEP 9 - Push to GitHub
+# ============================================
+# git add .
+# git commit -m "fresh mobile app"
+# git push
+
+# ============================================
+# STEP 10 - Build APK
+# ============================================
+# npx eas-cli build -p android --profile preview
+
+# ============================================
+# DONE! Download APK from the link shown
+# Install on Android phone
+# Enable "Install from unknown sources" if needed
+# ============================================
