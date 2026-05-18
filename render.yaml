@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: vehicle-app-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://vehicleuser:Vehicle%40123@cluster0.sxo8uo0.mongodb.net/vehicleapp
+      - key: JWT_SECRET
+        value: VehicleAppSecretKey2024
+      - key: FAST2SMS_API_KEY
+        value: cHtvegUOuXYlzEm51pxFIQ6AD4KaCJ8wPon9brTSVyLfWi2dGqJZt7nXc5kjmYoR2O1i8CGDFVP6bM4g
+      - key: ADMIN_MOBILE
+        value: "9620125952"
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: Admin@1234

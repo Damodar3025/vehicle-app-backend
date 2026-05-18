@@ -4,17 +4,17 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth',        require('./routes/auth'));
 app.use('/api/submissions', require('./routes/submissions'));
-app.use('/api/admin', require('./routes/admin'));
+app.use('/api/admin',       require('./routes/admin'));
 
-// Health check
-app.get('/', (req, res) => res.json({ message: 'Vehicle App API running' }));
+// Health check — Render and cron ping this to keep server awake
+app.get('/',        (req, res) => res.json({ message: 'Vehicle App API running', status: 'ok' }));
+app.get('/health',  (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
 
 mongoose
   .connect(process.env.MONGO_URI)
