@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
     if (!username || !password)
       return res.status(400).json({ message: 'Username and password required' });
 
-    // ── Check .env admin credentials first ──────────────────────
+    // Check .env admin credentials first
     if (
       username === process.env.ADMIN_USERNAME &&
       password === process.env.ADMIN_PASSWORD
@@ -35,7 +35,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // ── Regular user login ───────────────────────────────────────
     const user = await User.findOne({ username });
     if (!user)
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -74,9 +73,15 @@ router.post('/register', async (req, res) => {
     if (!username || !password || !vehicleNumber || !mobileNumber || !vehicleType)
       return res.status(400).json({ message: 'All fields are required' });
 
-    const existing = await User.findOne({ username });
-    if (existing)
+    // Check duplicate username
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername)
       return res.status(409).json({ message: 'Username already taken' });
+
+    // Check duplicate vehicle number
+    const existingVehicle = await User.findOne({ vehicleNumber: vehicleNumber.toUpperCase() });
+    if (existingVehicle)
+      return res.status(409).json({ message: 'Vehicle number already registered. Contact admin.' });
 
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({
