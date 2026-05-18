@@ -36,15 +36,19 @@ const authMiddleware = async (req, res, next) => {
 const adminMiddleware = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No token, access denied' });
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.userId || decoded.id;
+    
+    // Handle .env admin
+    if (decoded.userId === 'admin' && decoded.isAdmin === true) {
+      req.user = { ...decoded, id: 'admin', isAdmin: true };
+      return next();
+    }
 
+    const userId = decoded.userId || decoded.id;
     const user = await User.findById(userId).select('-password');
     if (!user) return res.status(401).json({ message: 'User not found' });
     if (!user.isAdmin) return res.status(403).json({ message: 'Admin access only' });
-
     req.user = { ...decoded, id: user._id, isAdmin: true };
     next();
   } catch (err) {
