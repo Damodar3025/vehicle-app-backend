@@ -6,7 +6,6 @@ const sendSMS = async (message) => {
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const from = 'whatsapp:+14155238886';
     const to = `whatsapp:+91${process.env.ADMIN_MOBILE}`;
-
     const response = await axios.post(
       `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
       new URLSearchParams({ From: from, To: to, Body: message }),
