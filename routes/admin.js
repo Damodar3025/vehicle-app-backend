@@ -67,15 +67,28 @@ function buildMatch(query) {
 // so the mobile drill-down modal shows only the relevant trips
 router.get('/submissions', adminMiddleware, async (req, res) => {
   try {
-    const match = buildMatch(req.query);
+    const { factoryPlace, vehicleNumber, startDate, endDate, month } = req.query;
+    const query = {};
 
-    const submissions = await Submission.find(match)
+    if (factoryPlace) query.factoryPlace = factoryPlace;
+    if (vehicleNumber) query.vehicleNumber = vehicleNumber.toUpperCase();
+
+    if (month) {
+      const [year, mo] = month.split('-');
+      const start = new Date(year, mo - 1, 1);
+      const end = new Date(year, mo, 0, 23, 59, 59);
+      query.createdAt = { $gte: start, $lte: end };
+    } else if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate) query.createdAt.$gte = new Date(startDate);
+      if (endDate) query.createdAt.$lte = new Date(endDate + 'T23:59:59');
+    }
+
+    const submissions = await Submission.find(query)
       .populate('user', 'username mobileNumber')
       .sort({ createdAt: -1 });
-
     res.json(submissions);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 });
